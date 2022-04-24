@@ -11,7 +11,16 @@ import { corsConfig } from './config';
 import '../db/mongoose';
 const app: Express = express();
 
-app.use(cors(corsConfig));
+app.use(cors());
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,POST,PUT,PATCH,DELETE,OPTIONS"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(express.json({}));
